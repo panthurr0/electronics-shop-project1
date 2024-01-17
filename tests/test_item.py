@@ -43,3 +43,16 @@ def test_pay_rate(fixture_class_item, fixture_class_item_2):
 def test_item_all(fixture_class_item, fixture_class_item_2):
     for value in Item.all:
         assert isinstance(value, object)
+
+
+def test_name(fixture_class_item):
+    fixture_class_item.name = 'Планшет'
+
+    assert fixture_class_item.name == 'Планшет'
+
+
+def string_to_number():
+    assert Item.string_to_number('82,34') == 82
+    assert Item.string_to_number(80) == 80
+
+
