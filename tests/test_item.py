@@ -56,3 +56,7 @@ def string_to_number():
     assert Item.string_to_number(80) == 80
 
 
+def test_repr():
+    item1 = Item("Ноутбук", 52000, 3)
+    assert repr(item1) == "Item('Ноутбук', 52000, 3)"
+    assert str(item1) == 'Ноутбук'
