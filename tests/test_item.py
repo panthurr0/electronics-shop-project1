@@ -1,6 +1,7 @@
 import pytest
 from src.item import Item
 from src.phone import Phone
+from tests.test_phone import fixture_class_phone
 
 
 @pytest.fixture
@@ -13,9 +14,9 @@ def fixture_class_item_2():
     return Item('Ноутбук', 100, 34)
 
 
-@pytest.fixture
-def fixture_class_phone():
-    return Phone('iphone', 1200, 3, 2)
+# @pytest.fixture
+# def fixture_class_phone():
+#     return Phone('iphone', 1200, 3, 2)
 
 
 def test_check_len_item_all_if_len_zero():
@@ -34,7 +35,7 @@ def test_init_object_item(fixture_class_item):
 
 def test_sum_total_price(fixture_class_item, fixture_class_item_2):
     assert fixture_class_item.calculate_total_price() == 10000 * 20
-    assert fixture_class_item_2.calculate_total_price() == 100 * 666
+    assert fixture_class_item_2.calculate_total_price() == 100 * 34
 
 
 def test_pay_rate(fixture_class_item, fixture_class_item_2):
@@ -62,10 +63,10 @@ def string_to_number():
     assert Item.string_to_number(80) == 80
 
 
-def test_repr():
+def test_str_and_repr():
     item1 = Item('Ноутбук', 52000, 3)
-    assert repr(item1) == 'Item("Ноутбук", 52000, 3)'
     assert str(item1) == 'Ноутбук'
+    assert repr(item1) == "Item('Ноутбук', 52000, 3)"
 
 
 def test_add(fixture_class_item, fixture_class_item_2, fixture_class_phone):
@@ -75,4 +76,3 @@ def test_add(fixture_class_item, fixture_class_item_2, fixture_class_phone):
     assert fixture_class_item + fixture_class_item_2 == 54
     if phone1.number_of_sim == 0:
         assert ValueError
-
