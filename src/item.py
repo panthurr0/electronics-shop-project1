@@ -33,6 +33,11 @@ class Item:
         """
         return f"{self.__name}"
 
+    def __add__(self, other):
+        if isinstance(other, Item):
+            return self.quantity + other.quantity
+        raise Exception
+
     def calculate_total_price(self) -> int:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.

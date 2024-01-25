@@ -1,15 +1,21 @@
 import pytest
 from src.item import Item
+from src.phone import Phone
 
 
 @pytest.fixture
 def fixture_class_item():
-    return Item("Смартфон", 10000, 20)
+    return Item('Смартфон', 10000, 20)
 
 
 @pytest.fixture
 def fixture_class_item_2():
-    return Item('Ноутбук', 100, 666)
+    return Item('Ноутбук', 100, 34)
+
+
+@pytest.fixture
+def fixture_class_phone():
+    return Phone('iphone', 1200, 3, 2)
 
 
 def test_check_len_item_all_if_len_zero():
@@ -21,7 +27,7 @@ def test_check_len_item_all_if_len_one(fixture_class_item):
 
 
 def test_init_object_item(fixture_class_item):
-    assert fixture_class_item.name == "Смартфон"
+    assert fixture_class_item.name == 'Смартфон'
     assert fixture_class_item.price == 10000
     assert fixture_class_item.quantity == 20
 
@@ -57,6 +63,16 @@ def string_to_number():
 
 
 def test_repr():
-    item1 = Item("Ноутбук", 52000, 3)
-    assert repr(item1) == "Item('Ноутбук', 52000, 3)"
+    item1 = Item('Ноутбук', 52000, 3)
+    assert repr(item1) == 'Item("Ноутбук", 52000, 3)'
     assert str(item1) == 'Ноутбук'
+
+
+def test_add(fixture_class_item, fixture_class_item_2, fixture_class_phone):
+    phone1 = Phone('iphone_12', 500, 0, 1)
+    assert fixture_class_phone + phone1 == 3
+    assert fixture_class_item + fixture_class_phone == 23
+    assert fixture_class_item + fixture_class_item_2 == 54
+    if phone1.number_of_sim == 0:
+        assert ValueError
+
