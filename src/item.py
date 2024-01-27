@@ -16,10 +16,11 @@ class Item:
         :param price: Цена за единицу товара.
         :param quantity: Количество товара в магазине.
         """
-        self.__name = name
+        self.name = name
         self.price = price
         self.quantity = quantity
         self.all.append(self)
+        super().__init__()
 
     def __repr__(self):
         """
@@ -31,12 +32,12 @@ class Item:
         """
         :return: Название товара
         """
-        return f"{self.__name}"
+        return f"{self.name}"
 
     def __add__(self, other):
         if isinstance(other, Item):
             return self.quantity + other.quantity
-        raise Exception
+        return None
 
     def calculate_total_price(self) -> int:
         """

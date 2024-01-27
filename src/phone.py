@@ -27,6 +27,6 @@ class Phone(Item):
     @number_of_sim.setter
     def number_of_sim(self, value):
         if isinstance(value, int) and value > 0:
-            self.__number_of_sim = value
-        else:
             raise ValueError  # error: Количество физических SIM-карт должно быть целым числом больше нуля.
+
+        self.__number_of_sim = value
