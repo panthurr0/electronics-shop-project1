@@ -1,4 +1,7 @@
 import csv
+import os.path
+
+from src.instantiateCSVError import InstantiateCSVError
 
 
 class Item:
@@ -64,22 +67,27 @@ class Item:
         self.__name = str(name[0:10])
 
     @classmethod
-    def instantiate_from_csv(cls, path_file: str) -> None:
+    def instantiate_from_csv(cls, path_file) -> None:
         """
         Получает CSV-файл и отдаёт 5 классов
         """
         cls.all.clear()
+        if not os.path.exists(path_file):
+            raise FileNotFoundError('Отсутствует файл item.csv')
+        else:
+            with open(path_file, 'r', encoding='UTF-8') as csv_file:
+                file = csv.DictReader(csv_file)
+                for row in file:
+                    if len(row) != 3:
+                        raise InstantiateCSVError
+                    else:
+                        cls(row['name'], float(row['price']), int(row['quantity']))
 
-        with open(path_file, 'r', encoding='UTF-8') as csv_file:
-            file = csv.DictReader(csv_file)
 
-            for row in file:
-                cls(row['name'], float(row['price']), float(row['quantity']))
-
-    @staticmethod
-    def string_to_number(string) -> int:
-        """
-        Берёт число в формате str и возвращает в int
-        """
-        number = string.replace(',', '.')
-        return int(float(number))
+@staticmethod
+def string_to_number(string) -> int:
+    """
+    Берёт число в формате str и возвращает в int
+    """
+    number = string.replace(',', '.')
+    return int(float(number))

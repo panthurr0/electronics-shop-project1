@@ -1,7 +1,8 @@
 import pytest
 from src.item import Item
 from src.phone import Phone
-from tests.test_phone import fixture_class_phone
+from src.instantiateCSVError import InstantiateCSVError
+import pathlib
 
 
 @pytest.fixture
@@ -14,9 +15,9 @@ def fixture_class_item_2():
     return Item('Ноутбук', 100, 34)
 
 
-# @pytest.fixture
-# def fixture_class_phone():
-#     return Phone('iphone', 1200, 3, 2)
+@pytest.fixture
+def fixture_class_phone():
+    return Phone('iphone', 1200, 3, 2)
 
 
 def test_check_len_item_all_if_len_zero():
@@ -76,3 +77,14 @@ def test_add(fixture_class_item, fixture_class_item_2, fixture_class_phone):
     assert fixture_class_item + fixture_class_item_2 == 54
     if phone1.number_of_sim == 0:
         assert ValueError
+
+
+def test_instantiate_csv_error():
+    ROOT = pathlib.Path(__file__).parent.parent
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv(pathlib.Path.joinpath(ROOT / 'tests/test_items.csv'))
+
+
+def test_file_not_found_error():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv('tests/something.csv')
